@@ -1,0 +1,20 @@
+{
+  "name": "ssf",
+  "version": "0.0.0",
+  "description": "Simple string formatting",
+  "main": "ssf",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattbierner/ssf.git"
+  },
+  "keywords": [
+    "string",
+    "format",
+    "formatting"
+  ],
+  "author": "Matt Bierner",
+  "license": "BSD"
+}
