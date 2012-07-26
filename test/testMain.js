@@ -4,7 +4,7 @@ define(['../lib/ssf'], function(ssf){
         'tests': [
             ["Literal @ symbol",
             function(){
-                assert.equal(ssf.format("@@ @(@) @", {'@': '1'}), "@ 1 @");
+                assert.equal(ssf.format("@@ @(@)", {'@': '1'}), "@ 1");
             }],
             ["Simple replace",
             function(){
@@ -22,7 +22,11 @@ define(['../lib/ssf'], function(ssf){
             }],
             ["Top level literal",
             function(){
-                assert.equal(ssf.format("abc @() a b c", "1"), "abc 1 a b c");
+                assert.equal(ssf.format("abc @ a b c", "1"), "abc 1 a b c");
+            }],
+            ["Trailing period",
+            function(){
+                assert.equal(ssf.format("@a.@(a).", {'a': '1'}), "1.1.");
             }],
             ["@ Association",
             function(){
@@ -46,9 +50,11 @@ define(['../lib/ssf'], function(ssf){
             }],
             ["Empty Key",
             function(){
-                assert.equal(ssf.format("@a. @b..c @(a.) @(b..c)", {
+                assert.equal(ssf.format("@()", 1), "1");
+                assert.equal(ssf.format("@b..c @(a.) @(b..c)", {
+                    '' : 4,
                     'a': {'': '1'},
-                    'b': {'': {'c': '2'}}}), "1 2 1 2");
+                    'b': {'': {'c': '2'}}}), "2 1 2");
             }],
             
             ["Array value",

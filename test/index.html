@@ -22,9 +22,9 @@
                   testFormatNumber].forEach(function(m){
                     m.name && module(m.name);
                     m.tests.forEach(function(e){ test.apply(this, e); });
-                debugger;
-                var a = ssf.format("@(:x3)", 10);
                 
+                debugger;
+                var a = ssf.format("@()", {'':10});
             });
         });
     </script>
