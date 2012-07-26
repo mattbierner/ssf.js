@@ -56,10 +56,6 @@ define(['../lib/ssf'], function(ssf){
                 assert.equal(ssf.format("0 1 2 @0@1@2",
                     ['a', 'b', 'c']), '0 1 2 abc');
             }],
-            ["undefined value",
-            function(){
-                assert.equal(ssf.format("0 1 2@0@1@2"), '0 1 2');
-            }],
         ],
     };
 });

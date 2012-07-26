@@ -20,6 +20,10 @@ define(['../lib/ssf'], function(ssf){
                 assert.equal(ssf.format("a@(a,4)b", {'a': 'ccccccc'}), "acccccccb");
             }],
             
+            ["No alignment",
+            function(){
+                assert.equal(ssf.format("a@(a,)b", {'a': '1'}), "a1b");
+            }],
             ["Invalid alignment",
             function(){
                 assert.equal(ssf.format("a@(a,c)b", {'a': '1'}), "a1b");

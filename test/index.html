@@ -12,13 +12,20 @@
     <script src="resources/qunit-1.9.0.js"></script>
     <script type="application/javascript" src="resources/require.js"></script>
     <script type="application/javascript">
-        require(['../lib/ssf', 'testMain', 'testAlign'], function(ssf, testMain, testAlign){
-            
-            [testMain, testAlign].forEach(function(m){
-                m.name && module(m.name);
-                m.tests.forEach(function(e){ test.apply(this, e); });
+        require(
+            ['../lib/ssf', 'testMain', 'testAlign', 'testFormatUndefined',
+                'testFormatNumber'],
+            function(ssf, testMain, testAlign, testFormatUndefined,
+                testFormatNumber)
+            {
+                [testMain, testAlign, testFormatUndefined,
+                  testFormatNumber].forEach(function(m){
+                    m.name && module(m.name);
+                    m.tests.forEach(function(e){ test.apply(this, e); });
+                debugger;
+                var a = ssf.format("@(:x3)", 10);
+                
             });
-            
         });
     </script>
 
