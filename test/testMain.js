@@ -62,6 +62,27 @@ define(['../lib/ssf'], function(ssf){
                 assert.equal(ssf.format("0 1 2 @0@1@2",
                     ['a', 'b', 'c']), '0 1 2 abc');
             }],
+            
+        // Custom formatters 
+            ["Template specific formatter",
+            function(){
+                var t = ssf.compile("@", {
+                    'formatterForUndefined': function() { return function(){ return "undefined"; } }
+                })
+                assert.equal(t(), 'undefined');
+            }],
+            
+            ["Global formatter",
+            function(){
+                var old = ssf.defaults.formatterForUndefined;
+                
+                var t = ssf.compile("@")
+                ssf.defaults.formatterForUndefined = function() { return function(){ return "undefined"; } }
+                assert.equal(t(), '');
+                assert.equal(ssf.format("@"), 'undefined');
+                
+                ssf.defaults.formatterForUndefined = old;
+            }],
         ],
     };
 });

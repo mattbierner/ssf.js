@@ -43,6 +43,12 @@ define(['../lib/ssf'], function(ssf){
             ["Hex from float", 
             function(){
                 assert.equal(ssf.format("@(:x2)", 10.14), "a.23");
+                assert.equal(ssf.format("@(:x8)", 255.125), "ff.20000000");
+
+                assert.equal(ssf.format("@(:x0)", 255.00), "ff");
+                assert.equal(ssf.format("@(:x3)", 10.00), "00a");
+
+                assert.equal(ssf.format("@(:x)", 10.144), "a.24");
             }],
             
         // Decimal
@@ -108,6 +114,8 @@ define(['../lib/ssf'], function(ssf){
             function(){
                 assert.equal(ssf.format("@(:e2)", 314.159), "3.14e+2");
                 assert.equal(ssf.format("@(:e2)", 314.159), "3.14e+2");
+                
+                assert.equal(ssf.format("@(:e)", 314.159), "3.14159e+2");
             }],
         ],
     };
