@@ -14,12 +14,12 @@
     <script type="application/javascript">
         require(
             ['../lib/ssf', 'testMain', 'testAlign', 'testFormatUndefined',
-                'testFormatNumber', 'testFormatString'],
+                'testFormatNumber', 'testFormatString', 'testFormatArray'],
             function(ssf, testMain, testAlign, testFormatUndefined,
-                testFormatNumber, testFormatString)
+                testFormatNumber, testFormatString, testFormatArray)
             {
                 [testMain, testAlign, testFormatUndefined,
-                  testFormatNumber, testFormatString].forEach(function(m){
+                  testFormatNumber, testFormatString, testFormatArray].forEach(function(m){
                     m.module && module(m.module);
                     m.tests.forEach(function(e){ test.apply(this, e); });
             });
