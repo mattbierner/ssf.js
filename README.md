@@ -8,17 +8,17 @@ syntax, can format any Javascript object.
     
     // Formatting from an object.
     ssf.format("Member['a']:@a Member['c']['d']:@c.d", {'a':1, 'c': {'d': 2}}) -> "Member['a']:1 Member['c']['d']:2"
-
+    
     // Formatting from an array.
     ssf.format("Array[0]:@0 Array[1]:@1", ['A', 3]) -> "Array[0]:A Array[1]:3"
-
 
 SSf also supports 'compiled' template functions, custom formatting logic (both
 globally and per formatter), and string alignment. A simple set of default data
 formatters is included.
 
-# Installing #
 
+# Using #
+SSF supports
 
 # SSF Overview #
 
@@ -216,7 +216,7 @@ calling slice. JOINER is the string used to join array elements.
 
 
 ## Object Formatter ##
-Returns the toSting value of the object.
+Returns the 'toSting' value of the object.
 
     ssf.format("@", {}) -> "[Object Object]"
     
