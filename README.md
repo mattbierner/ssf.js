@@ -17,8 +17,37 @@ globally and per formatter), and string alignment. A simple set of default data
 formatters is included.
 
 
-# Using #
-SSF supports
+# Using SSF #
+SSF support being used as both an AMD type module or in the global scope.
+
+## With AMD ##
+Include any AMD style module loader and load SSF for usage.
+
+    <!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <script type="application/javascript" src="require.js"></script>
+        <script type="application/javascript">
+            require(['ssf'], function(ssf) {
+                alert(ssf.format("Hello @", "world"));
+            });
+        </script>
+    </body>
+
+## Global ##
+Include SSF file directly and use global to access it.
+
+    <!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <script type="application/javascript" src="ssf.js"></script>
+        <script type="application/javascript">
+            alert(ssf.format("Hello @", "world"));
+        </script>
+    </body>
+
 
 # SSF Overview #
 
