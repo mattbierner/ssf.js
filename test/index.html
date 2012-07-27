@@ -14,17 +14,14 @@
     <script type="application/javascript">
         require(
             ['../lib/ssf', 'testMain', 'testAlign', 'testFormatUndefined',
-                'testFormatNumber'],
+                'testFormatNumber', 'testFormatString'],
             function(ssf, testMain, testAlign, testFormatUndefined,
-                testFormatNumber)
+                testFormatNumber, testFormatString)
             {
                 [testMain, testAlign, testFormatUndefined,
-                  testFormatNumber].forEach(function(m){
-                    m.name && module(m.name);
+                  testFormatNumber, testFormatString].forEach(function(m){
+                    m.module && module(m.module);
                     m.tests.forEach(function(e){ test.apply(this, e); });
-                
-                debugger;
-                var a = ssf.format("@ @()", {'':10});
             });
         });
     </script>
