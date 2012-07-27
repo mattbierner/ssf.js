@@ -1,20 +1,21 @@
 # SSF.js - Simple Javascript String Formatting #
 
 ## About ##
-SSF.js is string formatting designed for Javascript. It uses a simple formatting
-syntax, can format any Javascript object.
+SSF.js is string formatting designed for Javascript. Format any Javascript object
+using a simple syntax.
 
     ssf.format("Hello @", "world") -> "Hello world"
     
     // Formatting from an object.
-    ssf.format("Member['a']:@a Member['c']['d']:@c.d", {'a':1, 'c': {'d': 2}}) -> "Member['a']:1 Member['c']['d']:2"
+    ssf.format("Member['a']:@a Member['c']['d']:@c.d", {'a':1, 'c': {'d': 2}})
+        -> "Member['a']:1 Member['c']['d']:2"
     
     // Formatting from an array.
     ssf.format("Array[0]:@0 Array[1]:@1", ['A', 3]) -> "Array[0]:A Array[1]:3"
 
-SSf also supports 'compiled' template functions, custom formatting logic (both
-globally and per formatter), and string alignment. A simple set of default data
-formatters is included.
+SSF also supports 'compiled' template functions, custom formatting logic (both
+globally and per formatter), and alignment. A simple set of default data
+formatters is also included.
 
 
 # Using SSF #
@@ -103,7 +104,7 @@ lookup for an empty string.
 
 
 ### Top Level Object ###
-Use either '@' or '@()' to acces the top level input object. The expanded
+Use either '@' or '@()' to access the top level input object. The expanded
 syntax allows you specify alignment and a format string for the top level object.
 
     ssf.format("@ @()", "top") -> "top top"
@@ -113,7 +114,7 @@ syntax allows you specify alignment and a format string for the top level object
 ### Literal @ Symbol ###
 Use '@@' to output a literal '@' symbol.
 
-    ssf.format("@@") -> "@@"
+    ssf.format("@@") -> "@"
 
 Only '@@' will generate a literal '@'. '@(@)' will lookup the '@' member in the
 data object.
@@ -129,7 +130,7 @@ consider using a 'compiled' template function instead.
     formatter(3) -> "Hello 3"
 
 As this example demonstrates, compiled template use dynamic typing and react
-correctly when differnt object types are passed in.
+correctly when different object types are passed in.
 
 Template functions also can use custom options and capture global options when
 the template is created.
@@ -148,7 +149,7 @@ the template is created.
 
 # Default Formatters #
 A simple set of default formatters are provided with SSF. Custom Formatters also
-demonstrates writting a custom formatter.
+demonstrates writing a custom formatter.
 
 ## Undefined Formatter ##
 Returns an empty string in all cases.
@@ -209,7 +210,7 @@ otherwise it behaves like 'd'.
 
 ## String Formatter ##
 Accepts format strings of the form "[START,END]". Both values are optional
-intergers. START and END determine a range to select from the string. Think
+integers. START and END determine a range to select from the string. Think
 of it as calling slice on the string and using the result.
 
     ssf.format("@(:[1])", "abc") -> "bc"
@@ -225,7 +226,7 @@ of it as calling slice on the string and using the result.
 
 ## Array Formatter ##
 Accepts format strings of the form "[START,END]JOINER". All values are optional.
-START and END are intergers that determine a range to select from the array like
+START and END are integers that determine a range to select from the array like
 calling slice. JOINER is the string used to join array elements.
 
     ssf.format("@(:|)", ['a', 'b', 'c']) -> "a|b|c"
