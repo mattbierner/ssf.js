@@ -23,6 +23,10 @@ define(['../lib/ssf'], function(ssf){
                 assert.equal(ssf.format("@(:3)", 3), "003");
                 assert.equal(ssf.format("@(:1)", 3.14), "3.1");
                 assert.equal(ssf.format("@(:3)", 0xA), "010");
+                
+                var f = ssf.compile("@(:3)");
+                assert.equal(f(3), "003");
+                assert.equal(f(3.14), "3.140");
             }],
             
         // Hex
@@ -71,6 +75,9 @@ define(['../lib/ssf'], function(ssf){
             function(){
                 assert.equal(ssf.format("@(:f4)", 3.14), "3.1400");
                 assert.equal(ssf.format("@(:f4)", -3.14), "-3.1400");
+                
+                assert.equal(ssf.format("@(:f0)", 3.14), "3");
+                assert.equal(ssf.format("@(:f0)", -3.14), "-3");
             }],
             ["Float from decimal", 
             function(){
