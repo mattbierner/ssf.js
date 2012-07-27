@@ -12,11 +12,17 @@ define(['../lib/ssf'], function(ssf){
             }],
             ["Basic hex", 
             function(){
-                assert.equal(ssf.format("@()", 0xa), "10");
+                assert.equal(ssf.format("@()", 0xA), "10");
             }],
             ["Basic float", 
             function(){
                 assert.equal(ssf.format("@()", 3.14), "3.14");
+            }],
+            ["Precission", 
+            function(){
+                assert.equal(ssf.format("@(:3)", 3), "003");
+                assert.equal(ssf.format("@(:1)", 3.14), "3.1");
+                assert.equal(ssf.format("@(:3)", 0xA), "010");
             }],
             
         // Hex
