@@ -19,10 +19,10 @@ formatters is also included.
 
 
 # Using SSF #
-SSF support being used as both an AMD type module or in the global scope.
+SSF can be used either as an AMD style module or in the global scope.
 
 ## With AMD ##
-Include any AMD style module loader and load SSF for usage.
+Include any AMD style module loader and load SSF.
 
     <!DOCTYPE html>
     <html>
@@ -37,7 +37,7 @@ Include any AMD style module loader and load SSF for usage.
     </body>
 
 ## Global ##
-Include SSF file directly and use global to access it.
+Include SSF file directly and use 'ssf' global.
 
     <!DOCTYPE html>
     <html>
@@ -55,12 +55,12 @@ Include SSF file directly and use global to access it.
 ## Formatting Syntax ##
 
 SSF format tokens come in two flavors, simple and expanded. The expanded syntax
-can express any simple token and allows alignment and formatter options. The
-two can be mixed and matched in the same statement.
+can express any simple token and allows specifying alignment and formatter
+options. The two can be mixed in the same format string.
 
 
 ### Simple Syntax ###
-Simple tokens are of the form '@PATH' where PATH is a period delineated path
+Simple tokens are of the form '@PATH' where PATH is a period delineated path,
 like one written in unquoted Javascript code.
 
     ssf.format("@a", input) -> PATH = input.a
@@ -70,7 +70,7 @@ like one written in unquoted Javascript code.
 The path is always relative to the input data. Note in the last example, simple
 tokens do not capture trailing periods.
 
-        ssf.format("Hi @a. How are you?", {'a': 'Bill'}) -> "Hi Bill. How are you?"
+    ssf.format("Hi @a. How are you?", {'a': 'Bill'}) -> "Hi Bill. How are you?"
 
 Simple syntax tokens can also be next to one another.
 
@@ -117,7 +117,7 @@ Use '@@' to output a literal '@' symbol.
     ssf.format("@@") -> "@"
 
 Only '@@' will generate a literal '@'. '@(@)' will lookup the '@' member in the
-data object.
+input object.
 
     ssf.format("@(@)", {'@': 3}) -> "3"
 
@@ -130,26 +130,26 @@ consider using a 'compiled' template function instead.
     formatter(3) -> "Hello 3"
 
 As this example demonstrates, compiled template use dynamic typing and react
-correctly when different object types are passed in.
+correctly when different objects are passed in.
 
 Template functions also can use custom options and capture global options when
 the template is created.
 
     var formatter = ssf.compile("Hello @", {
-        'formatterForUndefined': function() { return function() { return "undefined"}; }
+        'undefinedFactory': function() { return function() { return "undefined"}; }
     });
     ssf.format("Hello @", undefined) -> "Hello "
     formatter(undefined) -> "Hello undefined"
 
     var formatter = ssf.compile("@")
-    ssf.defaults.formatterForUndefined = function() { return function(){ return "undefined"; } }
+    ssf.defaults.undefinedFactory = function() { return function(){ return "undefined"; } }
     formatter(undefined) -> ""
     ssf.format("@", undefined) -> "undefined"
 
 
 # Default Formatters #
-A simple set of default formatters are provided with SSF. Custom Formatters also
-demonstrates writing a custom formatter.
+A simple set of default formatters are provided with SSF. You can also write
+your own formatters.
 
 ## Undefined Formatter ##
 Returns an empty string in all cases.
@@ -161,9 +161,8 @@ Accepts format strings of the form "(d|f|e|x)PRECISION". Both values are optiona
 PRECISION is a positive integer.
 The first value is the output number type: 
 
-### 'd' ###
-Outputs a decimal number. If specified, PRECISION is the minimum number of digits
-to output.
+### d ###
+Outputs a decimal number. PRECISION is the minimum number of digits.
 
     ssf.format("@(:d)", 10) -> "10"
     ssf.format("@(:d)", -10) -> "-10"
@@ -172,7 +171,7 @@ to output.
     ssf.format("@(:d4)", 9.99) -> "0010"
 
 ### f ###
-Outputs a fixed pointer number. If specified, PRECISION is the number of digits
+Outputs a fixed pointer number. PRECISION is the number of digits
 after the decimal place. Default PRECISION is 2.
 
     ssf.format("@(:f)", 3.14) -> "3.14"
@@ -182,8 +181,8 @@ after the decimal place. Default PRECISION is 2.
     ssf.format("@(:f4)", 10) -> "10.0000"
 
 ### e ###
-Output a number in scientific notation. If specified, PRECISION is the number
-of digits after the decimal place. 
+Output a number in scientific notation. PRECISION is the number of digits after
+the decimal place. 
 
     ssf.format("@(:e)", 3e+9) -> "3e+9"
     ssf.format("@(:e)", -3e-9) -> "-3e-9"
@@ -209,7 +208,7 @@ otherwise it behaves like 'd'.
 
 
 ## String Formatter ##
-Accepts format strings of the form "[START,END]". Both values are optional
+Uses format strings of the form "[START,END]". Both values are optional
 integers. START and END determine a range to select from the string. Think
 of it as calling slice on the string and using the result.
 
@@ -225,9 +224,9 @@ of it as calling slice on the string and using the result.
 
 
 ## Array Formatter ##
-Accepts format strings of the form "[START,END]JOINER". All values are optional.
-START and END are integers that determine a range to select from the array like
-calling slice. JOINER is the string used to join array elements.
+Uses format strings of the form "[START,END]JOINER". All values are optional.
+START and END are integers that determine a range to select from the array.
+JOINER is a string used to join array elements.
 
     ssf.format("@(:|)", ['a', 'b', 'c']) -> "a|b|c"
     ssf.format("@(:[1])", ['a', 'b', 'c']) -> "b,c"
@@ -253,3 +252,86 @@ Returns the 'toSting' value of the object.
     var obj = {};
     obj.toString = function() { return 'bla'; };
     ssf.format("@", obj) -> 'bla'
+
+
+# API #
+
+**compile(template:String, [options:Object])**
+'Compiles' a given template string with a set of options.
+
+* template:String The string template that will be formatted.
+* [options:Object] A set of override, template specific options. Compiling also
+captures the state of the global options.
+
+Returns a template function that accepts one input argument and returns a
+formatted string.
+
+**format(template:String, [options:Object])**
+Formats a given string immediately.
+
+* template:String The string template that will be formatted.
+* [input:Object] An object that provides values for the template keys.
+* [options:Object] A set of override, template specific options.
+
+Returns the formatted string.
+
+**formatArgs(template:String, args...)**
+Exactly like 'format' expect input is the argument array, like how printf works.
+
+
+## Options ##
+Options has the structure:
+
+    {
+        'valueFactory':
+        'undefinedFactory':
+        'numberFactory':
+        'stringFactory':
+        'dateFactory':
+        'arrayFactory':
+        'objectFactory':
+    }
+
+See custom formatters for details.
+
+## Custom Formatter Factories ##
+Each factory function generates formatting functions for a given type.
+'valueFactory' controls delegation to the other formatters.
+
+Custom formatters may be used to support new format string options or introduce
+new formatting behavior.
+
+**valueFactory(format:String, options:Object)**
+Controls delegation to other format factories. Default implementation does this
+based on input type.
+
+* format:String The format string to generate a formatter for.
+* options:Object SSF options for the template.
+
+Returns a formatter function that accepts a value input and returns a string.
+
+**Other format functions(format:String)**
+Returns a formatter function that accepts a value input and returns a string.
+
+
+# Other Notes #
+
+# Extending Global Objects #
+By default, SSF does not extend any global Javascript objects. If you want to 
+support statements such as:
+
+    "@ 123".format("abc") -> "abc 123"
+    "@0 @1 @2".formatArgs(1, 2, 3) -> "1 2 3"
+
+and dont mind altering global objects, add the following statements to your program:
+
+    String.prototype.format = function(input){ return ssf.format(this, input); }
+    String.prototype.formatArgs = function(){ return ssf.format(this, arguments); }
+
+# Known Limitations #
+* Token values may not contain characters: '(' or ')'.
+* Path key values may not contain characters: '.'.
+* Paths may not contain any of the following characters: ',' or ':'.
+* Top level access to empty string key is not supported. Empty string keys
+may be used other places.
+

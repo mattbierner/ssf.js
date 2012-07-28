@@ -67,21 +67,21 @@ define(['../lib/ssf'], function(ssf){
             ["Template specific formatter",
             function(){
                 var t = ssf.compile("@", {
-                    'formatterForUndefined': function() { return function(){ return "undefined"; } }
+                    'undefinedFactory': function() { return function(){ return "undefined"; } }
                 })
                 assert.equal(t(), 'undefined');
             }],
             
             ["Global formatter",
             function(){
-                var old = ssf.defaults.formatterForUndefined;
+                var old = ssf.defaults.undefinedFactory;
                 
                 var t = ssf.compile("@")
-                ssf.defaults.formatterForUndefined = function() { return function(){ return "undefined"; } }
+                ssf.defaults.undefinedFactory = function() { return function(){ return "undefined"; } }
                 assert.equal(t(), '');
                 assert.equal(ssf.format("@"), 'undefined');
                 
-                ssf.defaults.formatterForUndefined = old;
+                ssf.defaults.undefinedFactory = old;
             }],
         ],
     };
