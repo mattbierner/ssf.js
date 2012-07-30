@@ -256,7 +256,7 @@ Returns the 'toSting' value of the object.
 
 # API #
 
-**compile(template:String, [options:Object])**
+###compile(template:String, [options:Object])###
 'Compiles' a given template string with a set of options.
 
 * template:String The string template that will be formatted.
@@ -266,7 +266,7 @@ captures the state of the global options.
 Returns a template function that accepts one input argument and returns a
 formatted string.
 
-**format(template:String, [options:Object])**
+###format(template:String, [options:Object])###
 Formats a given string immediately.
 
 * template:String The string template that will be formatted.
@@ -275,7 +275,7 @@ Formats a given string immediately.
 
 Returns the formatted string.
 
-**formatArgs(template:String, args...)**
+###formatArgs(template:String, args...)###
 Exactly like 'format' expect input is the argument array, like how printf works.
 
 
@@ -301,7 +301,7 @@ Each factory function generates formatting functions for a given type.
 Custom formatters may be used to support new format string options or introduce
 new formatting behavior.
 
-**valueFactory(format:String, options:Object)**
+###valueFactory(format:String, options:Object)###
 Controls delegation to other format factories. Default implementation does this
 based on input type.
 
@@ -310,7 +310,7 @@ based on input type.
 
 Returns a formatter function that accepts a value input and returns a string.
 
-**Other format functions(format:String)**
+###Other format functions(format:String)###
 Returns a formatter function that accepts a value input and returns a string.
 
 
