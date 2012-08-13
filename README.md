@@ -14,8 +14,8 @@ using a simple syntax.
     ssf.format("Array[0]:@0 Array[1]:@1", ['A', 3]) -> "Array[0]:A Array[1]:3"
 
 SSF also supports 'compiled' template functions, custom formatting logic (both
-globally and per formatter), and alignment. A simple set of default data
-formatters is also included.
+globally and per formatter), static or dynamic types, and alignment. A simple
+set of default data formatters is included.
 
 
 # Using SSF #
@@ -54,9 +54,11 @@ Include SSF file directly and use 'ssf' global.
 
 ## Formatting Syntax ##
 
-SSF format tokens come in two flavors, simple and expanded. The expanded syntax
-can express any simple token and allows specifying alignment and formatter
-options. The two can be mixed in the same format string.
+SSF format tokens come in three flavors, simple, expanded, and static.
+The expanded syntax can express any simple token and allows specifying
+alignment and formatter options. Static syntax is nearly the same as expanded
+but also includes a static formattertype. The syntaxes can be mixed in the
+same format string.
 
 
 ### Simple Syntax ###
@@ -101,6 +103,27 @@ characters and whitespace.
 
 Note that in the last example, the trailing period means that there is an extra
 lookup for an empty string.
+
+### Static Syntax ###
+Static tokens are of the form '@TYPE(PATH,ALIGNMENT:FORMAT)'. Besides type,
+static syntax behaves the same as expanded. TYPE is used to select a formatter
+as compile time instead of as runtime.
+
+    sssf.format("@s()", 'abc') -> "abc"
+    sssf.format("@n(,3)", 3) -> "3  " 
+    sssf.format("@n(:f2)", 3) -> "3.00"
+
+### Types ###
+The following types are supported by default. Type codes are case-insensitive.
+Support for arbitrary additional types may be added using a custom 'formatterFactory'
+function.
+
+* u -> undefined
+* o -> object
+* a -> array
+* s -> string
+* n -> number
+* d -> date
 
 
 ### Top Level Object ###
@@ -159,6 +182,13 @@ Returns an empty string in all cases.
 ## Number Formatter ##
 Accepts format strings of the form "(d|f|e|x)PRECISION". Both values are optional.
 PRECISION is a positive integer.
+
+Attempts to convert the input to a number like parseInt. Allows strings to be passed in.
+
+        var t = sssf.compile("@n()");
+        t(1) -> '1'
+        t("1aa") -> '1'
+
 The first value is the output number type: 
 
 ### d ###
@@ -222,6 +252,11 @@ of it as calling slice on the string and using the result.
     ssf.format("@(:[-2,-1])", "abc") -> "b"
     ssf.format("@(:[1,4])", "abc") -> "bc"
 
+Calls toString on any input object.
+
+    var t = sssf.compile("@s(:[1,])");
+    t('abc') -> 'bc'
+    t({}) -> 'object Object]'
 
 ## Array Formatter ##
 Uses format strings of the form "[START,END]JOINER". All values are optional.
@@ -243,6 +278,11 @@ JOINER is a string used to join array elements.
     ssf.format("@(:[1,4] )", ['a', 'b', 'c']) -> "b c"
     ssf.format("@(:[][])", ['a', 'b', 'c']) -> "a[]b[]c"
 
+Allows array like objects.
+
+        var t = sssf.compile("@a()");
+        t(['a', 'b', 'c']) -> 'a,b,c'
+        t({'0': 'a', '1': 'b', '2':'c', length:3}) -> 'a,b,c'
 
 ## Object Formatter ##
 Returns the 'toSting' value of the object.
