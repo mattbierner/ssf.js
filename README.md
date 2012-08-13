@@ -109,9 +109,9 @@ Static tokens are of the form '@TYPE(PATH,ALIGNMENT:FORMAT)'. Besides type,
 static syntax behaves the same as expanded. TYPE is used to select a formatter
 as compile time instead of as runtime.
 
-    sssf.format("@s()", 'abc') -> "abc"
-    sssf.format("@n(,3)", 3) -> "3  " 
-    sssf.format("@n(:f2)", 3) -> "3.00"
+    ssf.format("@s()", 'abc') -> "abc"
+    ssf.format("@n(,3)", 3) -> "3  " 
+    ssf.format("@n(:f2)", 3) -> "3.00"
 
 ### Types ###
 The following types are supported by default. Type codes are case-insensitive.
@@ -185,7 +185,7 @@ PRECISION is a positive integer.
 
 Attempts to convert the input to a number like parseInt. Allows strings to be passed in.
 
-        var t = sssf.compile("@n()");
+        var t = ssf.compile("@n()");
         t(1) -> '1'
         t("1aa") -> '1'
 
@@ -254,9 +254,10 @@ of it as calling slice on the string and using the result.
 
 Calls toString on any input object.
 
-    var t = sssf.compile("@s(:[1,])");
+    var t = ssf.compile("@s(:[1,])");
     t('abc') -> 'bc'
     t({}) -> 'object Object]'
+
 
 ## Array Formatter ##
 Uses format strings of the form "[START,END]JOINER". All values are optional.
@@ -280,7 +281,7 @@ JOINER is a string used to join array elements.
 
 Allows array like objects.
 
-        var t = sssf.compile("@a()");
+        var t = ssf.compile("@a()");
         t(['a', 'b', 'c']) -> 'a,b,c'
         t({'0': 'a', '1': 'b', '2':'c', length:3}) -> 'a,b,c'
 
