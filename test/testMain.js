@@ -83,6 +83,16 @@ define(['../lib/ssf'], function(ssf){
                 
                 ssf.defaults.undefinedFactory = old;
             }],
+            
+        // Static tests
+            ["Static type test",
+            function(){
+                var t = ssf.compile("@u()");
+                assert.equal(t(), '');
+                assert.equal(t({}), '');
+                assert.equal(t("abc"), '');
+            }],
+            
         ],
     };
 });
