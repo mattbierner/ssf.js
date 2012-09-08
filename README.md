@@ -106,12 +106,12 @@ lookup for an empty string.
 
 ### Static Syntax ###
 Static tokens are of the form '@TYPE(PATH,ALIGNMENT:FORMAT)'. Besides type,
-static syntax behaves the same as expanded. TYPE is used to select a formatter
-as compile time instead of as runtime.
+static syntax is the same as expanded. TYPE is used to select a formatter
+at compile time instead of at runtime.
 
     ssf.format("@s()", 'abc') -> "abc"
-    ssf.format("@n(,3)", 3) -> "3  " 
-    ssf.format("@n(:f2)", 3) -> "3.00"
+    ssf.format("@n()", "3aa") -> "3" 
+    ssf.format("@n(:f2)", "3aa") -> "3.00"
 
 ### Types ###
 The following types are supported by default. Type codes are case-insensitive.
