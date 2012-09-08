@@ -1,6 +1,6 @@
 {
   "name": "ssf",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Simple string formatting",
   "main": "ssf",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mattbierner/ssf.git"
+    "url": "https://github.com/mattbierner/ssf.js.git"
   },
   "keywords": [
     "string",
